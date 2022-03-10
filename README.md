@@ -1,4 +1,4 @@
-# thwordle-ans
+# wordle-ans
 
 Answer for [Wordle](https://www.nytimes.com/games/wordle/index.html). Based on [gxjakkap/thwordle-ans](https://github.com/gxjakkap/thwordle-ans).
 
