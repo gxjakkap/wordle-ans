@@ -39,8 +39,10 @@
           "
         >
           By clicking "I Acknowledge", I accept that I'll be spoiled about
-          toda's Wordle answer. The maker (Jakkaphat Ch.) of this website
-          (https://wordle-ans.vercel.app) will not be responsible in anyway.
+          today's Wordle answer. The maker (Jakkaphat Ch.) of this website (<a
+            href="https://wordle-ans.vercel.app"
+            >https://wordle-ans.vercel.app</a
+          >) will not be responsible in anyway.
         </p>
         <div class="flex text-center justify-center">
           <button
