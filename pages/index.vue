@@ -148,6 +148,7 @@ export default Vue.extend({
       audio.play()
     },
     toggleTheme() {
+      console.log(this.$colorMode.preference, this.$colorMode.value)
       switch (this.$colorMode.preference) {
         case 'light':
           this.$colorMode.preference = 'dark'
@@ -155,6 +156,17 @@ export default Vue.extend({
         case 'dark':
           this.$colorMode.preference = 'light'
           break
+        case 'system':
+          switch (this.$colorMode.value) {
+            case 'light':
+              this.$colorMode.preference = 'dark'
+              this.$colorMode.value = 'dark'
+              break
+            case 'dark':
+              this.$colorMode.preference = 'light'
+              this.$colorMode.value = 'light'
+              break
+          }
         default:
           this.$colorMode.preference = 'dark'
           break
