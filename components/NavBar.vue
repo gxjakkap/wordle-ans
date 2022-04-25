@@ -55,29 +55,29 @@ import Vue from 'vue'
 export default Vue.extend({
   data() {
     return {
-      darkmodeButtonIsDark: false,
+      darkmodeButtonIsDark: true,
     }
   },
   methods: {
     darkmodeButtonUpdate() {
       switch (this.$colorMode.preference) {
         case 'light':
-          this.darkmodeButtonIsDark = false
+          this.darkmodeButtonIsDark = true
           break
         case 'dark':
-          this.darkmodeButtonIsDark = true
+          this.darkmodeButtonIsDark = false
           break
         case 'system':
           switch (this.$colorMode.value) {
             case 'light':
-              this.darkmodeButtonIsDark = false
+              this.darkmodeButtonIsDark = true
               break
             case 'dark':
-              this.darkmodeButtonIsDark = true
+              this.darkmodeButtonIsDark = false
               break
           }
         default:
-          this.darkmodeButtonIsDark = false
+          this.darkmodeButtonIsDark = true
           break
       }
     },
