@@ -32,7 +32,7 @@ export default Vue.extend({
   data() {
     const epochDate = 1624060800000
     const today = new Date()
-    const day = Math.floor((today.getTime() - epochDate) / 86400000) + 1
+    const day = Math.floor((today.getTime() - epochDate) / 86400000)
     const word = wl.words
     return {
       isModalVisible: true,
