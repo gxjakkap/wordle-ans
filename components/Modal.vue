@@ -1,6 +1,25 @@
 <template>
-  <div class="fixed bg-slate-100 flex justify-center items-center">
-    <div class="bg-white shadow flex flex-col overflow-x-auto">
+  <div
+    class="
+      fixed
+      bg-white
+      dark:bg-slate-800
+      flex
+      justify-center
+      items-center
+      h-screen
+      w-screen
+    "
+  >
+    <div
+      class="
+        bg-slate-100
+        dark:bg-slate-800
+        shadow
+        flex flex-col
+        overflow-x-auto
+      "
+    >
       <section class="relative px-20 py-10 w-full">
         <div class="flex text-center justify-center">
           <h1
@@ -36,6 +55,7 @@
             xl:w-3/5
             2xl:w-3/5
             break-words
+            dark:text-slate-100
           "
         >
           By clicking "I Acknowledge", I accept that I'll be spoiled about
@@ -44,6 +64,7 @@
             >https://wordle-ans.vercel.app</a
           >) will not be responsible in anyway.
         </p>
+        <br />
         <div class="flex text-center justify-center">
           <button
             type="button"
