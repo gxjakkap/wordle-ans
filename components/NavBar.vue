@@ -30,12 +30,22 @@
         dark:focus:ring-gray-700
         rounded-lg
         text-sm
-        p-3
+        px-5
+        py-1
       "
       @click="toggleDarkMode"
     >
-      <!--<font-awesome-icon icon="fa-solid fa-sun-bright" />-->
-      Dark Mode
+      <font-awesome-icon
+        icon="fa-solid fa-moon"
+        class="cursor-pointer text-xl"
+        v-if="darkmodeButtonIsDark"
+      />
+      <font-awesome-icon
+        icon="fa-solid fa-sun"
+        class="cursor-pointer text-xl"
+        v-else
+      />
+      <!--Dark Mode-->
     </button>
   </div>
 </template>
@@ -43,10 +53,41 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
+  data() {
+    return {
+      darkmodeButtonIsDark: false,
+    }
+  },
   methods: {
+    darkmodeButtonUpdate() {
+      switch (this.$colorMode.preference) {
+        case 'light':
+          this.darkmodeButtonIsDark = false
+          break
+        case 'dark':
+          this.darkmodeButtonIsDark = true
+          break
+        case 'system':
+          switch (this.$colorMode.value) {
+            case 'light':
+              this.darkmodeButtonIsDark = false
+              break
+            case 'dark':
+              this.darkmodeButtonIsDark = true
+              break
+          }
+        default:
+          this.darkmodeButtonIsDark = false
+          break
+      }
+    },
     toggleDarkMode() {
       this.$emit('toggletheme')
+      this.darkmodeButtonUpdate()
     },
+  },
+  mounted() {
+    this.darkmodeButtonUpdate()
   },
 })
 </script>
