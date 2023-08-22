@@ -97,23 +97,29 @@ export default Vue.extend({
     Modal,
   },
   data() {
-    const epochDate = 1624060800000
     const today = new Date()
-    const day = Math.floor((today.getTime() - epochDate) / 86400000)
-    const word = wl.words
     return {
       isModalVisible: true,
-      day: day,
-      word: word[day],
+      day: 0,
+      word: '',
       pronunciation: '',
       definition: '',
       pos: '',
       link: '',
       audioLink: '',
       audioAvailable: false,
+      today: today,
     }
   },
   mounted() {
+
+    this.$axios
+      .$get(`https://www.nytimes.com/svc/wordle/v2/${this.today.toLocaleDateString('en-CA')}.json`)
+      .then((x) => {
+        this.day = x.day_since_launch
+        this.word = x.solution
+      })
+
     this.$axios
       .$get(`https://api.dictionaryapi.dev/api/v2/entries/en/${this.word}`)
       .then((x) => {
