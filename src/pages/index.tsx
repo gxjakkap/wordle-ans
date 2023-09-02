@@ -118,84 +118,45 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
     }
 
     return (
-        <main
-        className={`flex justify-center overflow-y-scroll ${inter.className}`}
-        >
+        <main className={`flex justify-center overflow-y-scroll ${inter.className}`}>
         {showModal ? (<Modal setModalState={setShowModal} />) : (
-            <div
-            className="
-        fixed
-        items-top
-        text-center
-        h-screen
-        w-screen
-        bg-white
-        dark:bg-slate-800
-        "
-        >
-            <NavBar />
-            <div className="flex text-center justify-center">
-                <h1 className={`text-5xl text-center flex py-5 dark:text-white ${karnak.className}`}>
-                    Wordle Answer
-                </h1>
+            <div className="fixed items-top text-center h-screen w-screen bg-white dark:bg-slate-800">
+                <NavBar />
+                <div className="flex text-center justify-center">
+                    <h1 className={`text-5xl text-center flex py-5 dark:text-white ${karnak.className}`}>
+                        Wordle Answer
+                    </h1>
+                </div>
+                <hr className="h-5" />
+                <p className="flex justify-center text-center text-xl dark:text-slate-300">
+                    { day }
+                </p>
+                <h2 className="flex justify-center text-center mt-5text-2xl dark:text-slate-300"><b>Today&apos;s Answer:</b></h2>
+                <h2 className="text-4xl mt-3 flex justify-center text-center dark:text-slate-300">{ word }</h2>
+                <br />
+                {dictAvailable ? (
+                    <div className="justify-center text-center items-center">
+                        <h2 className="text-xl mt-3 justify-center ml-5 dark:text-slate-300">
+                            <b>Pronunciation:</b> { dictData.pronunciation }
+                            {dictData.audioAvailable ? (<FontAwesomeIcon icon={faVolumeHigh} onClick={() => {playAudio()}} className='cursor-pointer ml-2' />) : (<></>)}
+                        </h2>
+                        <h2 className="text-xl mt-3 justify-center break-words ml-5 dark:text-slate-300">
+                            <b>Definition:</b> <i>{ dictData.pos }</i>
+                            <br />
+                            { dictData.definition }
+                        </h2>
+                        <h2>
+                            see more <a href={dictData.link} className="text-lg underline text-blue-500 hover:text-blue-400">here</a>
+                            <b>Definition:</b> <i>{ dictData.pos }</i>
+                            <br />
+                            { dictData.definition }
+                        </h2>
+                        <br />
+                    </div>
+                ): (<></>)}
             </div>
-            <hr className="h-5" />
-            <p className="flex justify-center text-center text-xl dark:text-slate-300">
-                { day }
-            </p>
-            <h2
-                className="
-            flex
-            justify-center
-            text-center
-            mt-5
-            text-2xl
-            dark:text-slate-300
-        "
-            >
-                <b>Today&apos;s Answer:</b>
-            </h2>
-            <h2
-                className="
-            text-4xl
-            mt-3
-            flex
-            justify-center
-            text-center
-            dark:text-slate-300
-        "
-            >
-                { word }
-            </h2>
-            <br />
-            {dictAvailable ? (<div className="justify-center text-center items-center">
-                <h2 className="text-xl mt-3 justify-center ml-5 dark:text-slate-300">
-                    <b>Pronunciation:</b> { dictData.pronunciation }
-                    {dictData.audioAvailable ? (<FontAwesomeIcon icon={faVolumeHigh} onClick={() => {playAudio()}} className='cursor-pointer ml-2' />) : (<></>)}
-                </h2>
-                <h2
-                    className="
-                    text-xl
-                    mt-3
-                    justify-center
-                    break-words
-                    ml-5
-                    dark:text-slate-300
-                    "
-                >
-                    <b>Definition:</b> <i>{ dictData.pos }</i>
-                    <br />
-                    { dictData.definition }
-                </h2>
-                <h2 className="text-lg mt-3 justify-centerml-5 dark:text-slate-300">
-                    see more <a href={dictData.link} className="text-lg underline text-blue-500 hover:text-blue-400">here</a>
-                </h2>
-            </div>) : (<></>)}
-        </div>
         )}
-        
-            <br />
-            {showModal ? (<></>) : (<WDAFooter />)}
+        {showModal ? (<></>) : (<WDAFooter />)}  
         </main>
     )
 }
