@@ -145,12 +145,7 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
                             <br />
                             { dictData.definition }
                         </h2>
-                        <h2>
-                            see more <a href={dictData.link} className="text-lg underline text-blue-500 hover:text-blue-400">here</a>
-                            <b>Definition:</b> <i>{ dictData.pos }</i>
-                            <br />
-                            { dictData.definition }
-                        </h2>
+                        <h2 className="dark:text-slate-300">see more <a href={dictData.link} className="text-lg underline text-blue-500 hover:text-blue-400">here</a></h2>
                         <br />
                     </div>
                 ): (<></>)}
