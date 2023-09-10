@@ -2,24 +2,25 @@
 import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
 import Head from 'next/head'
+import { useUrl } from 'nextjs-current-url'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeHigh } from '@fortawesome/free-solid-svg-icons'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useEffect, useState } from 'react'
-import Modal from '@/components/FrontModal'
 import RetroModal from '@/components/RetroModal'
 import NavBar from '@/components/NavBar'
 import WDAFooter from '@/components/Footer'
-import { useUrl } from 'nextjs-current-url'
+import { dayToDate } from '@/helpers/dayhelper'
+import type { DayToDate } from '@/helpers/dayhelper'
 
 
 const inter = Inter({ subsets: ['latin'] })
-const karnak = localFont({ src: '../font/karnakcondensed.otf' })
+const karnak = localFont({ src: '../../font/karnakcondensed.otf' })
 
 interface WdData {
    word: string,
-   day: number
-
+   day: number,
+   dateS: string
 }
 
 interface DictData {
@@ -31,20 +32,39 @@ interface DictData {
    audioAvailable: boolean
 }
 
-export const getServerSideProps: GetServerSideProps<WdData> = async() => {
-    const date = new Date()
-    const nytRes = await fetch(`https://www.nytimes.com/svc/wordle/v2/${date.toISOString().substring(0, 10)}.json`)
+export const getServerSideProps: GetServerSideProps<WdData> = async({req, res, params}) => {
+    if (!params){
+        return {
+            notFound: true
+        }
+    }
+    const day = params.day
 
+    if (parseInt(day as string) <= 0){
+        return {
+            notFound: true
+        }
+    }
+
+    const date = dayToDate(parseInt(day as string))
+    if (date.error){
+        return {
+            notFound: true
+        }
+    }
+    const nytRes = await fetch(`https://www.nytimes.com/svc/wordle/v2/${date.date?.toISOString().substring(0, 10)}.json`)
     if (nytRes.status !== 200){
         throw Error('Failed API Res')
     }
 
     else {
         const nytWordleData = await nytRes.json()
+        console.log(nytWordleData)
         return {
             props: {
                 word: nytWordleData['solution'] as string,
-                day: nytWordleData['days_since_launch'] as number,
+                day: nytWordleData['days_since_launch'] as number || 0,
+                dateS: date.date?.toDateString() || "that day"
             }
         }
     }
@@ -52,8 +72,7 @@ export const getServerSideProps: GetServerSideProps<WdData> = async() => {
     
 }
 
-export default function Home({word, day}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    const [showModal, setShowModal] = useState(true)
+export default function Retro({word, day, dateS}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const [showRetroModal, setShowRetroModal] = useState(false)
     const [pronunAudio, setPronunAudio] = useState<HTMLAudioElement | null>(null)
     const [dictAvailable, setDictAvailable] = useState(false)
@@ -67,6 +86,7 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
     })
 
     const { href: currentUrl } = useUrl() ?? {}
+
 
     useEffect(() => {
         const fetchDictData = async() => {
@@ -126,38 +146,37 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
     return (
         <>
             <Head>
-                <title>{`Wordle Answer`}</title>
-                <meta name='description' content="Wordle answer for today" />
+                <title>{`Day ${day} - Wordle Answer`}</title>
+                <meta name='description' content={`Wordle answer for day ${day}`} />
                 <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name='author' content='Jakkaphat Chalermphanaphan' />
                 <meta name="keywords" content="Wordle, wordle, wordle answer" />
-                <meta property='og:title' content="Wordle Answer" />
-                <meta property='og:description' content="Wordle answer for today" />
+                <meta property='og:title' content={`${day} - Wordle Answer`} />
+                <meta property='og:description' content={`Wordle answer for day ${day}`} />
                 <meta property="og:image" content={`${currentUrl}api/og-retro?day=${day}`} />
                 <meta property="og:site_name" content="Wordle Answer" />
-                <meta property="og:description" content="Wordle answer for today" />
+                <meta property="og:description" content={`Wordle answer for day ${day}`} />
                 <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content="Wordle Answer" />
-                <meta name="twitter:description" content="Wordle answer for today" />
+                <meta name="twitter:title" content={`${day} - Wordle Answer`} />
+                <meta name="twitter:description" content={`Wordle answer for day ${day}`} />
                 <meta name="twitter:site" content="@WordleAnsdotcom" />
                 <meta name="twitter:image" content={`${currentUrl}api/og-retro?day=${day}`} />
             </Head>
             <main className={`flex justify-center overflow-y-scroll ${inter.className}`}>
-            {showModal ? (<Modal setModalState={setShowModal} />) : (
                 <div className="fixed items-top text-center h-screen w-screen bg-white dark:bg-slate-800">
                     <NavBar setRetroModalState={setShowRetroModal} />
                     {showRetroModal ? <RetroModal setModalState={setShowRetroModal} day={day} /> : <></>}
                     <div className="flex text-center justify-center">
                         <h1 className={`text-5xl text-center flex py-5 dark:text-white ${karnak.className}`}>
-                            Wordle Answer
+                            Wordle Answer [Retro]
                         </h1>
                     </div>
                     <hr className="h-5" />
                     <p className="flex justify-center text-center text-xl dark:text-slate-300">
                         { day }
                     </p>
-                    <h2 className="flex justify-center text-center mt-5text-2xl dark:text-slate-300"><b>Today&apos;s Answer:</b></h2>
+                    <h2 className="flex justify-center text-center mt-5 text-2xl dark:text-slate-300">Answer for {dateS}:</h2>
                     <h2 className="text-4xl mt-3 flex justify-center text-center dark:text-slate-300">{ word }</h2>
                     <br />
                     {dictAvailable ? (
@@ -166,7 +185,7 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
                                 <b>Pronunciation:</b> { dictData.pronunciation }
                                 {dictData.audioAvailable ? (<FontAwesomeIcon icon={faVolumeHigh} onClick={() => {playAudio()}} className='cursor-pointer ml-2' />) : (<></>)}
                             </h2>
-                            <h2 className="text-xl mt-3 justify-center break-words ml-5 dark:text-slate-300">
+                            <h2 className="text-xl mt-3 justify-center break-words dark:text-slate-300 lg:mx-20">
                                 <b>Definition:</b> <i>{ dictData.pos }</i>
                                 <br />
                                 { dictData.definition }
@@ -176,8 +195,7 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
                         </div>
                     ): (<></>)}
                 </div>
-            )}
-            {showModal ? (<></>) : (<WDAFooter />)}  
+                <WDAFooter />
             </main>
         </>
     )

@@ -65,10 +65,10 @@ const Modal = ({setModalState}: ModalProps) => {
               dark:text-slate-100
             "
                 >
-                    By clicking &quot;I Acknowledge&quot;, I accept that I&apos;ll be spoiled about
+                    By clicking &quot;I Acknowledge&quot; or proceeding any further, I accept that I&apos;ll be spoiled about
                     today&apos;s Wordle answer. The maker (Jakkaphat Ch.) of this website (<a
-                        href="https://wordle-ans.vercel.app"
-                    >https://wordle-ans.vercel.app</a>) will not be responsible in anyway.
+                        href="https://www.wordleans.com"
+                    >wordleans.com</a>) will not be responsible in anyway.
                 </p>
                 <br />
                 <div className="flex text-center justify-center">

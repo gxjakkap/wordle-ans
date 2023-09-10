@@ -1,8 +1,14 @@
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { Dispatch, SetStateAction } from "react"
 
-const NavBar = () => {
+interface NavbarProps {
+    setRetroModalState: Dispatch<SetStateAction<boolean>>
+}
+
+
+const NavBar = ({setRetroModalState}: NavbarProps) => {
     return (
         <div
         className="
@@ -16,12 +22,23 @@ const NavBar = () => {
         "
     >
         <div className="flex items-center justify-end ml-4">
-        <Link href="/" className="block px-3 py-2">Home</Link>
-        <a
-            href="https://github.com/gxjakkap/wordle-ans"
-            target="_blank"
-            className="block px-3 py-2"
-            >GitHub</a>
+            <Link href="/" className="block px-3 py-2">Home</Link>
+            <a href="#" className="block px-3 py-2" onClick={() => {setRetroModalState(true)}}>Past answer</a>
+            <a
+                href="https://th.wordleans.com"
+                target="_blank"
+                className="block px-3 py-2"
+                >Thwordle Answer</a>
+            <a
+                href="https://twitter.com/wordleansdotcom"
+                target="_blank"
+                className="block px-3 py-2"
+                >Twitter</a>
+            <a
+                href="https://github.com/gxjakkap/wordle-ans"
+                target="_blank"
+                className="block px-3 py-2"
+                >GitHub</a>
         </div>
         <button
         id="theme-toggle"

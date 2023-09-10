@@ -10,6 +10,7 @@ const WDAFooter = () => {
             text-stone-900
             dark:text-slate-300
             text-xxs
+            overflow-y-hidden
             ">
             <a className="flex justify-center" href="https://github.com/gxjakkap/wordle-ans" target="_blank">
                 <svg
@@ -31,12 +32,12 @@ const WDAFooter = () => {
             </a>
             <a
                 className="flex justify-center hover:underline hover:text-blue-500"
-                href="https://twitter.com/messages/compose?recipient_id=1338534842447798274"
-            >Answer&apos;s not matching up?</a>
+                href="https://www.nytimes.com/games/wordle/index.html/"
+            >Play NYT Wordle</a>
             <a
                 className="flex justify-center hover:underline hover:text-blue-500"
-                href="https://thwordle-ans.vercel.app"
-            >Check out thwordle-ans</a>
+                href="https://twitter.com/messages/compose?recipient_id=1338534842447798274"
+            >Answer&apos;s not matching up?</a>
             <a
                 className="flex justify-center hover:underline hover:text-blue-500"
                 href="https://twitter.com/guntxjakka"
