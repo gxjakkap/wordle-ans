@@ -10,7 +10,6 @@ import Modal from '@/components/FrontModal'
 import RetroModal from '@/components/RetroModal'
 import NavBar from '@/components/NavBar'
 import WDAFooter from '@/components/Footer'
-import { useUrl } from 'nextjs-current-url'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -65,8 +64,6 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
         audioLink: '',
         audioAvailable: false
     })
-
-    const { href: currentUrl } = useUrl() ?? {}
 
     useEffect(() => {
         const fetchDictData = async() => {
@@ -134,14 +131,14 @@ export default function Home({word, day}: InferGetServerSidePropsType<typeof get
                 <meta name="keywords" content="Wordle, wordle, wordle answer" />
                 <meta property='og:title' content="Wordle Answer" />
                 <meta property='og:description' content="Wordle answer for today" />
-                <meta property="og:image" content={`${currentUrl}api/og-retro?day=${day}`} />
+                <meta property="og:image" content={`https://og.wordleans.com/api/today`} />
                 <meta property="og:site_name" content="Wordle Answer" />
                 <meta property="og:description" content="Wordle answer for today" />
                 <meta name="twitter:card" content="summary" />
                 <meta name="twitter:title" content="Wordle Answer" />
                 <meta name="twitter:description" content="Wordle answer for today" />
                 <meta name="twitter:site" content="@WordleAnsdotcom" />
-                <meta name="twitter:image" content={`${currentUrl}api/og-retro?day=${day}`} />
+                <meta name="twitter:image" content={`https://og.wordleans.com/api/today`} />
             </Head>
             <main className={`flex justify-center overflow-y-scroll ${inter.className}`}>
             {showModal ? (<Modal setModalState={setShowModal} />) : (

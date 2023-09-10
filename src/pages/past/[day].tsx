@@ -152,16 +152,16 @@ export default function Retro({word, day, dateS}: InferGetServerSidePropsType<ty
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name='author' content='Jakkaphat Chalermphanaphan' />
                 <meta name="keywords" content="Wordle, wordle, wordle answer" />
-                <meta property='og:title' content={`${day} - Wordle Answer`} />
+                <meta property='og:title' content={`Day ${day} - Wordle Answer`} />
                 <meta property='og:description' content={`Wordle answer for day ${day}`} />
-                <meta property="og:image" content={`${currentUrl}api/og-retro?day=${day}`} />
+                <meta property="og:image" content={`https://og.wordleans.com/api/retro?day=${day}`} />
                 <meta property="og:site_name" content="Wordle Answer" />
                 <meta property="og:description" content={`Wordle answer for day ${day}`} />
                 <meta name="twitter:card" content="summary" />
-                <meta name="twitter:title" content={`${day} - Wordle Answer`} />
+                <meta name="twitter:title" content={`Day ${day} - Wordle Answer`} />
                 <meta name="twitter:description" content={`Wordle answer for day ${day}`} />
                 <meta name="twitter:site" content="@WordleAnsdotcom" />
-                <meta name="twitter:image" content={`${currentUrl}api/og-retro?day=${day}`} />
+                <meta name="twitter:image" content={`https://og.wordleans.com/api/retro?day=${day}`} />
             </Head>
             <main className={`flex justify-center overflow-y-scroll ${inter.className}`}>
                 <div className="fixed items-top text-center h-screen w-screen bg-white dark:bg-slate-800">
